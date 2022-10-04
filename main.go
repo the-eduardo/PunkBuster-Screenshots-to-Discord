@@ -9,14 +9,14 @@ import (
 )
 
 const (
-// FILE PATHS TO DOWNLOAD:
-//ftp://
-	server := "YOUR_SERVER:PORT"
-	user := "YOUR_USER"
-	pass := "YOUR_PASS"
-	serverPath := "/YOUR_DIRECTORY_TO_PB_SS/svss/"
-
+	// FILE PATHS TO DOWNLOAD:
+	//ftp://
+	server     = "YOUR_SERVER:PORT"
+	user       = "YOUR_USER"
+	pass       = "YOUR_PASS"
+	serverPath = "/YOUR_DIRECTORY_TO_PB_SS/svss/"
 )
+
 func main() {
 	for xpng := 0; xpng <= 1000; xpng++ {
 		c, err := ftp.Dial("server")
