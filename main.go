@@ -67,7 +67,7 @@ func main() {
 
 // func file list that return the list
 func fileList(c *ftp.ServerConn) []string {
-	ftpFileList, err := c.List("serverPath")
+	ftpFileList, err := c.List(serverPath)
 	if err != nil {
 		log.Fatal("Error on List: ", err)
 	}
