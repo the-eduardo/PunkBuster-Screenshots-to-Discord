@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/jlaffaye/ftp"
 	"io"
 	"log"
 	"os"
+
+	"github.com/jlaffaye/ftp"
 )
 
 const (
@@ -19,11 +20,11 @@ const (
 
 func main() {
 	for xpng := 0; xpng <= 1000; xpng++ {
-		c, err := ftp.Dial("server")
+		c, err := ftp.Dial(server)
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = c.Login("user", "pass")
+		err = c.Login(user, pass)
 		if err != nil {
 			log.Fatal(err)
 		}
