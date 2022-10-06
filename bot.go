@@ -11,18 +11,20 @@ import (
 )
 
 var (
-	BotToken = flag.String("token", "SECRET.TOKEN_HERE", "Bot token")
+	BotToken  = flag.String("token", "SECRET.TOKEN_HERE", "Bot token")
 	ChannelID = "YOUR_Screenshots_ChannelID" // You should create a New Channel! The bot will spam a lot of images!
 
 )
-func init() { flag.Parse() }
-		// TODO: Create a new function that delete the local files (we don't want to resend the same files every time)
-		DisgordMain() {
+
+func DisgordMain() {
 
 	sc, _ := discordgo.New("Bot " + *BotToken)
 	sc.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		fmt.Println("Bot job is done, closing the session!")
-		sc.Close()
+		err := sc.Close()
+		if err != nil {
+			log.Panicf("[BOT] Error while closing the session: %v", err)
+		}
 	})
 
 	for x := 0; x < len(fileVerify()); x++ {
@@ -31,17 +33,17 @@ func init() { flag.Parse() }
 		log.Println("Sending file: ", fileVerify()[x])
 		myFile, err := os.Open(filePath)
 		if err != nil {
-			log.Fatalf("Cannot open the file: %v", err)
+			log.Panicf("[BOT] Cannot open the file: %v", err)
 		}
 		_, err = sc.ChannelFileSend(ChannelID, filePath, myFile)
 		if err != nil {
-			log.Fatalf("Cannot send the file to the Channel: %v", err)
+			log.Panicf("[BOT] Cannot send the file to the Channel: %v", err)
 		}
 	}
 
 	err := sc.Open()
 	if err != nil {
-		log.Fatalf("Cannot open the session: %v", err)
+		log.Panicf("[BOT] Cannot open the session: %v", err)
 	}
 	defer sc.Close()
 
@@ -57,11 +59,11 @@ func fileVerify() []string { // Check if the file exists and return as io.Reader
 	// List all files on local path downloads/
 	files, err := os.ReadDir("./Downloads/")
 	if err != nil {
-		log.Fatalf("[BOT] Error on verifying Local Files: %v", err)
+		log.Panicf("[BOT] Error on verifying Local Files: %v", err)
 	}
 
 	if len(files) == 0 {
-		log.Panic("No files found")
+		log.Panicf("[BOT] No files found")
 	}
 
 	var LocalFiles []string
