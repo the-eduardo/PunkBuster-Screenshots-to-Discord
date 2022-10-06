@@ -1,4 +1,4 @@
-module awesomeProject1
+module github.com/the-eduardo/pruunkbuster
 
 go 1.19
 
